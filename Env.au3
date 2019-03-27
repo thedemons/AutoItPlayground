@@ -39,7 +39,7 @@ Func _Env_Draw($self)
 		$y1 = $parent.camera.y >= 0 ? 0 : -$parent.camera.y
 		$x2 = $x1
 		$y2 = $parent.camera.y + $parent.h < $parent.env.h ? $parent.h : $parent.env.h - $parent.camera.y
-		_GDIPlus_GraphicsDrawLine($parent.context, $x1, $y1, $x2, $y2, $self.color)
+		_GDIPlus_GraphicsDrawLine($parent.context, $x1 * $parent.camera.z, $y1 * $parent.camera.z, $x2 * $parent.camera.z, $y2, $self.color)
 	EndIf
 
 	; right line
@@ -49,7 +49,7 @@ Func _Env_Draw($self)
 		$y1 = $parent.camera.y >= 0 ? 0 : -$parent.camera.y
 		$x2 = $x1
 		$y2 = $parent.camera.y + $parent.h < $parent.env.h ? $parent.h : $parent.env.h - $parent.camera.y
-		_GDIPlus_GraphicsDrawLine($parent.context, $x1, $y1, $x2, $y2, $self.color)
+		_GDIPlus_GraphicsDrawLine($parent.context, $x1 * $parent.camera.z, $y1 * $parent.camera.z, $x2 * $parent.camera.z, $y2, $self.color)
 	EndIf
 
 	; top line
@@ -58,7 +58,7 @@ Func _Env_Draw($self)
 		$y1 = -$parent.camera.y
 		$x2 = $parent.camera.x + $parent.w < $parent.env.w ? $parent.w : $parent.env.w - $parent.camera.x
 		$y2 = $y1
-		_GDIPlus_GraphicsDrawLine($parent.context, $x1, $y1, $x2, $y2, $self.color)
+		_GDIPlus_GraphicsDrawLine($parent.context, $x1 * $parent.camera.z, $y1 * $parent.camera.z, $x2, $y2 * $parent.camera.z, $self.color)
 	EndIf
 
 	; bottom line
@@ -67,10 +67,10 @@ Func _Env_Draw($self)
 		$y1 = $parent.env.h - $parent.camera.y
 		$x2 = $parent.camera.x + $parent.w < $parent.env.w ? $parent.w : $parent.env.w - $parent.camera.x
 		$y2 = $y1
-		_GDIPlus_GraphicsDrawLine($parent.context, $x1, $y1, $x2, $y2, $self.color)
+		_GDIPlus_GraphicsDrawLine($parent.context, $x1 * $parent.camera.z, $y1 * $parent.camera.z, $x2, $y2 * $parent.camera.z, $self.color)
 	EndIf
 	For $obj In $self.objs.__keys
-		$obj.draw
+		_Object_Draw($obj)
 	Next
 EndFunc
 

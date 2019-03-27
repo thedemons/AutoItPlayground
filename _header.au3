@@ -1,16 +1,19 @@
 #include-once
+#include <WinAPI.au3>
+#include <File.au3>
 #include <WinAPIGdi.au3>
 #include <WindowsConstants.au3>
 #include <GDIPlus.au3>
 #include <AutoItObject.au3>
 #include <Misc.au3>
 
+
 _AutoItObject_Startup()
 _GDIPlus_Startup()
 
 Global $__fEngineSetting = "data\setting.db"
 
-
+Global $Engine
 ;~ #include "TCP.au3"
 #include "Engine.au3"
 #include "Env.au3"
@@ -18,6 +21,8 @@ Global $__fEngineSetting = "data\setting.db"
 #include "Camera.au3"
 #include "Object.au3"
 #include "JSON.au3"
+#include "Intersection.au3"
+#include "Graphics.au3"
 
 Global $Gui, $Engine
 

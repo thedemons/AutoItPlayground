@@ -1,6 +1,7 @@
 #include-once
 #include "_header.au3"
 
+
 Global $__AllGUI[0]
 Global $__SettingProps[0]
 
@@ -54,19 +55,17 @@ EndFunc
 Global $testbrush = _GDIPlus_BrushCreateSolid(0xAAFFFFFF)
 Func _Engine_Draw($self)
 
-;~ 	_GDIPlus_GraphicsClear($self.context, $self.env.cBk)
 	_WinAPI_BitBlt($self.buffer, 0, 0, $self.w, $self.h, $self.buffer, 0, 0, $self.env.cBk)
 
-	$self.camera.update
-	$self.player.update
-	$self.env.draw
-	$self.player.draw
+	_Camera_Update($self.camera)
+	_Env_Draw($self.env)
+	_Player_Update($self.player)
+	_Player_Draw($self.player)
 
 	_GDIPlus_GraphicsFillRect($self.context, 3, 3, 200, 50, $testbrush)
 	_GDIPlus_GraphicsDrawString($self.context, "FPS: " & Round(1000 / TimerDiff($self.time)), 5, 5)
 	_GDIPlus_GraphicsDrawString($self.context, "Camera X: " & Round($self.camera.x, 2) & "   Y: " & Round($self.camera.y, 2), 5, 20)
 	_GDIPlus_GraphicsDrawString($self.context, "Player X: " & Round($self.player.x, 2) & "   Y: " & Round($self.player.y, 2), 5, 35)
-;~ 	_GDIPlus_GraphicsDrawImageRect($self.graphic, $self.bitmap, 0, 0, $self.w, $self.h)
 
 	_WinAPI_BitBlt($self.hDC, 0, 0, $self.w, $self.h, $self.buffer, 0, 0, $SRCCOPY) ;blit drawn bitmap to GUI
 

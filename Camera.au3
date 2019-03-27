@@ -49,7 +49,7 @@ Func _Camera_Move($self, $x = 0, $y = 0, $z = 0, $speed = 15)
 
 	$self.accelX += $x
 	$self.accely += $y
-	$self.accelZ += $z / 1000
+	$self.accelZ += $z
 	$self.accelRate = $speed
 	$self.state = $__CAM_FLOAT
 EndFunc
@@ -59,7 +59,7 @@ Func _Camera_AttachTo($self, $player)
 	$self.attach = $player
 EndFunc
 
-Func _Camera_MoveTo($self, $x, $y, $z = False, $speed = 15)
+Func _Camera_MoveTo($self, $x, $y, $z = -1, $speed = 15)
 
 	$self.oriX = $self.x
 	$self.oriY = $self.y
@@ -67,7 +67,7 @@ Func _Camera_MoveTo($self, $x, $y, $z = False, $speed = 15)
 
 	$self.desX = $x
 	$self.desY = $y
-	$self.desZ = $z ? $z : $self.z
+	$self.desZ = $z = -1 ? $self.z : $z
 
 
 	$self.state = $__CAM_MOVE
@@ -111,7 +111,19 @@ Func _Camera_Update($self)
 
 	EndSwitch
 
-	$self.moveto($self.attach.x - $self.parent.w / 2, $self.attach.y - $self.parent.h / 2, 0, 5)
+	If IsObj($self.attach) Then
+
+;~ 		Local $z = ($self.attach.accelX + $self.attach.accelY) / $self.attach.run
+;~ 		If $self.z = 1 Then
+;~ 			Local $speed = $z < 5 ? 5 : 2
+;~ 			$z = $z < 5 ? 1 : 5 / $z
+;~ 		Else
+;~ 			$z = $z < 5 ? $self.z + 0.1 : -1
+;~ 			If $z > 1 Then $z = 1
+;~ 		EndIf
+
+		$self.moveto($self.attach.x - $self.parent.w / 2, $self.attach.y - $self.parent.h / 2, -1, 3)
+	EndIf
 ;~ 	If $self.x < 0 Then $self.x = 0
 ;~ 	If $self.y < 0 Then $self.y = 0
 ;~ 	If $self.x + $self.parent.w > $self.parent.env.w Then $self.x = $self.parent.env.w - $self.parent.w

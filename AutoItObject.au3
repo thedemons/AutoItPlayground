@@ -2082,11 +2082,22 @@ EndFunc
 
 Func __OIDCheck($self, $props)
 
+	Local $check
+
 	If IsObj($self) = False Then Return False
+	If $props = "" Then Return False
+
+	If IsArray($props) = False Then
+
+		$check = Execute("$self." & $props)
+
+		If $check = "" And IsObj($check) = False Then Return False
+		Return True
+	EndIf
 
 	For $prop In $props
 
-		Local $check = Execute("$self." & $prop)
+		$check = Execute("$self." & $prop)
 
 		If $check = "" And IsObj($check) = False Then Return False
 	Next
